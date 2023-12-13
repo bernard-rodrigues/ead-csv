@@ -17,7 +17,6 @@ export const App = () => {
   const [startRow, setStartRow] = useState("");
   const [excelFile, setExcelFile] = useState<File | null>(null);
   const [cursos, setCursos] = useState(1);
-  const [step, setStep] = useState(1);
 
   useEffect(() => {
     if(!Object.keys(fields).includes('course' + cursos)){
