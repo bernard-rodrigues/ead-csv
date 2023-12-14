@@ -6,7 +6,7 @@ interface FormRowProps{
 }
 
 export const FormRow = (props: FormRowProps) => {
-    const {fields, addField, removeField} = useFields();
+    const {fields, addField, removeField, updateField} = useFields();
 
     const [isDefined, setIsDefined] = useState(false);
 
@@ -19,7 +19,7 @@ export const FormRow = (props: FormRowProps) => {
     }
 
     const toggleIsDefined = () => {
-        addField(props.fieldName, "");
+        updateField(props.fieldName);
         setIsDefined(!isDefined);
     }
     
@@ -31,18 +31,32 @@ export const FormRow = (props: FormRowProps) => {
             <span
                 className="border px-2 py-1 bg-gradient-to-r from-zinc-200 to-zinc-100"
                 style={
+                    props.fieldName === "username" ||
+                    props.fieldName === "dfnd_username" ||
                     props.fieldName === "firstname" || 
                     props.fieldName === "lastname" || 
                     props.fieldName === "fullname" ||
                     props.fieldName.includes("course") ||
-                    props.fieldName.includes("role") ? {width: "6rem"} : {width: "17rem"}}
+                    props.fieldName.includes("role") ? {width: "10rem"} : {width: "19rem"}}
             >
                 {props.fieldName}<span className="text-red-500">{props.fieldName.includes('group') ? '' : '*'}</span>
             </span>
-            
-            {props.fieldName === "firstname" || props.fieldName === "lastname" ? 
+
+            {props.fieldName === "username" || props.fieldName === "dfnd_username" ?
             <button 
-                className="w-44 bg-orange-moodle py-1 border text-zinc-100 text-sm hover:brightness-95"
+                className="w-36 py-2 border text-xs hover:brightness-95"
+                type="button"
+                style={props.fieldName === "dfnd_username" ? {backgroundColor: "#f98012", color: "rgb(244 244 245 / var(--tw-text-opacity))"} : {backgroundColor: "#cccccc"}}
+                onClick={toggleIsDefined}
+            >
+                Remover . e -
+            </button>
+
+            :
+
+            props.fieldName === "firstname" || props.fieldName === "lastname" ? 
+            <button 
+                className="w-36 bg-black py-2 border text-zinc-100 text-xs hover:brightness-95"
                 type="button"
                 onClick={toggleFullName}
             >
@@ -53,7 +67,7 @@ export const FormRow = (props: FormRowProps) => {
 
             props.fieldName === "fullname" ?
             <button 
-                className="w-44 bg-orange-moodle py-1 border text-zinc-100 text-sm hover:brightness-95"
+                className="w-36 bg-black py-2 border text-zinc-100 text-xs hover:brightness-95"
                 type="button"
                 onClick={toggleFullName}
             >
@@ -63,8 +77,8 @@ export const FormRow = (props: FormRowProps) => {
 
             props.fieldName.includes("course") ?
             <button
-                className="w-44 bg-orange-moodle py-1 border hover:brightness-95 text-sm"
-                style={isDefined?{backgroundColor: "#f98012", color: "rgb(244 244 245 / var(--tw-text-opacity))"}:{backgroundColor: "#cccccc"}}
+                className="w-36 py-2 border hover:brightness-95 text-xs"
+                style={props.fieldName.includes("dfnd_course") ? {backgroundColor: "#f98012", color: "rgb(244 244 245 / var(--tw-text-opacity))"}:{backgroundColor: "#cccccc"}}
                 type="button"
                 onClick={toggleIsDefined}
             >
@@ -74,8 +88,8 @@ export const FormRow = (props: FormRowProps) => {
 
             props.fieldName.includes("role") ?
             <button
-                className="w-44 bg-orange-moodle py-1 border text-zinc-600 text-sm hover:brightness-95"
-                style={isDefined ? {backgroundColor: "#f98012", color: "rgb(244 244 245 / var(--tw-text-opacity))"} : {backgroundColor: "#cccccc"}}
+                className="w-36 py-2 border text-xs hover:brightness-95"
+                style={props.fieldName.includes("dfnd_role") ? {backgroundColor: "#f98012", color: "rgb(244 244 245 / var(--tw-text-opacity))"} : {backgroundColor: "#cccccc"}}
                 type="button"
                 onClick={toggleIsDefined}
             >
@@ -90,8 +104,8 @@ export const FormRow = (props: FormRowProps) => {
                 htmlFor={props.fieldName + "-column"}
             >
                 {
-                    isDefined && props.fieldName.includes("course") ? "Qual o nome breve do curso?" : 
-                    isDefined && props.fieldName.includes("role") ? "Qual o nome do papel global?":
+                    props.fieldName.includes("dfnd_course") ? "Qual o nome breve do curso?" : 
+                    props.fieldName.includes("dfnd_role") ? "Qual o nome do papel global?":
                     "Qual coluna contém os dados?"
                 }
             </label>
@@ -104,8 +118,8 @@ export const FormRow = (props: FormRowProps) => {
                 onChange={e => addField(props.fieldName, e.target.value)}
                 maxLength={isDefined ? 50 : 2}
                 placeholder={
-                    isDefined && props.fieldName.includes("course") ? "Ex.: MAT144" :
-                    isDefined && props.fieldName.includes("role") ? "Ex.: student" :
+                    props.fieldName.includes("dfnd_course") ? "Ex.: MAT144" :
+                    props.fieldName.includes("dfnd_role") ? "Ex.: student" :
                     props.fieldName.includes('group') ? 'opcional (Ex.: G)' : 'Ex.: G'
                 }
                 required={props.fieldName.includes('group') ? false : true}

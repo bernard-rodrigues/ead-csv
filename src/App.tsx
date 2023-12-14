@@ -19,7 +19,10 @@ export const App = () => {
   const [cursos, setCursos] = useState(1);
 
   useEffect(() => {
-    if(!Object.keys(fields).includes('course' + cursos)){
+    if(
+      !Object.keys(fields).includes("course" + cursos) &&
+      !Object.keys(fields).includes("dfnd_course" + cursos)
+    ){
       addField("course" + cursos);
     }else if(cursos >= 1){
       removeField("course" + (cursos+1));
