@@ -45,7 +45,7 @@ export async function generateCSV(excelfile: File, startRow: number, fields: Fie
                                 const firstname = nameParts[0];
                                 const lastname = nameParts.slice(1).join(" ");
                                 return [firstname, lastname].join(',');
-                            }else if(flaggedIndexes.includes(index)){
+                            }else if(flaggedIndexes.includes(index) && fields[Object.keys(fields)[index]].length > 2){
                                 return fields[Object.keys(fields)[index]]
                             }
                             return data;

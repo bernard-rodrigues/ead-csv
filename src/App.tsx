@@ -86,7 +86,13 @@ export const App = () => {
         
         <Card title="Arquivo Excel" show={true} description={descriptions.excelfile}>
           <div className="p-3 text-center">
-            <input type="file" onChange={handleFileChange} accept=".xlsx, .xls" required />
+            <input className="
+            text-sm w-96
+            file:mr-4 file:py-2 file:px-4
+            file:rounded-full file:border-0
+            file:text-sm file:font-semibold
+          file:bg-orange-moodle file:text-zinc-100
+            hover:file:brightness-95 hover:file:cursor-pointer" type="file" onChange={handleFileChange} accept=".xlsx, .xls" required />
           </div>
         </Card>
 
